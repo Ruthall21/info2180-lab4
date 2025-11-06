@@ -1,0 +1,149 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avengers Character Search</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #4a90e2;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 30px auto;
+      background-color: #f0f0f0;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .search-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      width: 70%;
+      padding: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 8px 16px;
+      margin-left: 8px;
+      font-size: 16px;
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .hero-name {
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .hero-alias {
+      font-style: italic;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+
+    .hero {
+      margin-bottom: 15px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<header>AVENGERS CHARACTER SEARCH</header>
+
+<div class="container">
+  <div class="search-container">
+    <input type="text" id="searchField" placeholder="Search by Full Name or Alias">
+    <button id="searchBtn">Search</button>
+  </div>
+
+  <h2>RESULT</h2>
+  <div id="result"></div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchBtn = document.getElementById("searchBtn");
+    const searchField = document.getElementById("searchField");
+    const resultDiv = document.getElementById("result");
+
+    const superheroes = [
+      { name: "Captain America", alias: "Steve Rogers", bio: "Recipient of the Super-Soldier serum, World War II hero Steve Rogers fights for American ideals as one of the world's mightiest heroes and the leader of the Avengers." },
+      { name: "Iron Man", alias: "Tony Stark", bio: "Genius inventor Tony Stark uses his powered armor suit to fight evil and protect the world." },
+      { name: "Spider-Man", alias: "Peter Parker", bio: "A high school student bitten by a radioactive spider gains super agility, strength, and spider-sense to fight crime." },
+      { name: "Captain Marvel", alias: "Carol Danvers", bio: "Former Air Force pilot who gains cosmic powers and becomes one of the universe's strongest heroes." },
+      { name: "Black Widow", alias: "Natasha Romanoff", bio: "Elite spy and Avenger skilled in martial arts, espionage, and tactical operations." },
+      { name: "Hulk", alias: "Bruce Banner", bio: "Scientist who transforms into a green-skinned giant with immense strength when enraged." },
+      { name: "Hawkeye", alias: "Clint Barton", bio: "Expert marksman and archer who provides precision support to the Avengers team." },
+      { name: "Black Panther", alias: "T'Challa", bio: "King of Wakanda, enhanced strength, agility, and advanced combat skills thanks to the heart-shaped herb." },
+      { name: "Thor", alias: "Thor Odinson", bio: "God of Thunder, wielding Mjolnir, protector of Asgard and the Nine Realms." },
+      { name: "Scarlet Witch", alias: "Wanda Maximoff", bio: "A powerful sorceress with reality-altering abilities and chaos magic." }
+    ];
+
+    function displayHeroes(list) {
+      if (list.length === 0) {
+        resultDiv.innerHTML = '<span class="error">SUPERHERO NOT FOUND</span>';
+        return;
+      }
+
+      resultDiv.innerHTML = list.map(hero => `
+        <div class="hero">
+          <span class="hero-name">${hero.name}</span>
+          <span class="hero-alias">A.K.A ${hero.alias}</span>
+          <p>${hero.bio}</p>
+        </div>
+      `).join('');
+    }
+
+    searchBtn.addEventListener("click", () => {
+      const query = searchField.value.trim().toLowerCase();
+      if (!query) {
+        displayHeroes(superheroes);
+      } else {
+        const filtered = superheroes.filter(hero =>
+          hero.name.toLowerCase().includes(query) ||
+          hero.alias.toLowerCase().includes(query)
+        );
+        displayHeroes(filtered);
+      }
+    });
+
+    displayHeroes(superheroes);
+  });
+</script>
+
+</body>
+</html>
